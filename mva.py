@@ -3,6 +3,7 @@ from numpy.random import normal, uniform
 import matplotlib.pyplot as plt
 import datetime
 
+
 class Gaussian:
     def __init__(self, mean, std, points=1000, noise=0.001):
         self.noise = noise
@@ -73,6 +74,7 @@ def bisection(x, y, thresh=1):
     y = np.array(y)
     a = x[0]
     b = x[-1]
+
     while (b - a) > thresh:
 
         m = (a + b) / 2
@@ -103,15 +105,13 @@ def bisection(x, y, thresh=1):
     return m, f_m
 
 
-for r, b in [[r,b] for r in range(1, 20) for b in range(1, 20)]:
+for r, b in [[r,b] for r in range(5, 6) for b in range(9, 10)]:
     maxes = []
     for _ in range(1000):
         real = Poisson(r)
         bg = Poisson(b)
-        real.plot()
-        bg.plot()
 
-        #sumx, sumy = real + bg
+        sumx, sumy = real + bg
         sigx, sigy = real / bg
         maxx, maxy = bisection(sigx, sigy)
         maxes.append(maxx)
@@ -133,4 +133,8 @@ def plot_poisson():
     plt.plot(sumx, sumy, '--', color='lightgray')
     plt.plot(maxx, maxy, 'o', color='darkgray')
     plt.xlim(0, sigx[-1])
+    real.plot()
+    bg.plot()
     plt.show()
+
+plot_poisson()
